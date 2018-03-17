@@ -13,10 +13,7 @@ class BrowseCompanies extends Component {
     }
     
     componentDidMount(){
-        const ax = axios.create({
-          baseURL: process.env.PUBLIC_URL + '/logos'
-        });
-        ax.get('companies.json').then(response => {
+        axios.fetch('../public/companies.json').then(response => {
             this.setState({companies:response.data.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
         })
         .catch(function (error){
