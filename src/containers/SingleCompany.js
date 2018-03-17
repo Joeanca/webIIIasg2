@@ -12,13 +12,13 @@ class SingleCompany extends Component {
     constructor(props){
         super(props);
         this.state = {
-            something: []
+            symbol: props.company
         }
     }
     render(){
         return(
             <article className="section">
-                Single Company...
+                {this.state.symbol}
             </article>
         );
     }
