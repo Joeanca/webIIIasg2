@@ -96,6 +96,7 @@ class HeaderBar extends React.Component {
                     <div>Portfolio</div>
                     <div>Browse your portfolio</div>
                   </NavLink>
+                  <hr className="dropdown-divider"/>
                   <NavLink to={ {pathname: "/visualizer" }} className="dropdown-item">
                     <div>Stock Visualizer</div>
                     <div>Interactive stock information</div>
