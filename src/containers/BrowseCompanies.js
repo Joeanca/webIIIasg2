@@ -15,6 +15,7 @@ class BrowseCompanies extends Component {
 
     componentDidMount(){
         console.log(jsondata);
+        this.setState({companies:jsondata.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
         /*axios.get(process.env.PUBLIC_URL + ).then(response => {
             this.setState({companies:response.data.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
         })
