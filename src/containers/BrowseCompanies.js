@@ -44,7 +44,16 @@ class BrowseCompanies extends Component {
                                 return(
                                     <tr key={ind}>
                                     <td>
-                                        <NavLink to={"/company/" + company.symbol} company={company} key={ind}>The logo needs to be here</NavLink>
+                                        <NavLink to={"/company/" + company.symbol} company={company} key={ind}>
+                                            <div className="card-image box is-marginless column">
+                        <div className="container logo">
+                            <figure className="image image is-3by2">
+                                {/* https://stackoverflow.com/questions/44154939/load-local-images-in-react-js */}
+                              <img src={process.env.PUBLIC_URL + '/logos/'+ company.symbol+ '.svg'} alt={company.symbol} />
+                            </figure>
+                        </div>
+                    </div>
+                                        </NavLink>
                                     </td>
                                     <td><NavLink to={"/company/" + company.symbol} key={ind}>{company.name}</NavLink></td>
                                     </tr>
