@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-import jsondata from '/src/jsonFiles/companies.json';
+import jsondata from 'jsonFiles/companies.json';
 
 class BrowseCompanies extends Component {
     constructor(props){
