@@ -25,7 +25,7 @@ class App extends Component {
             <Route path="/companies" exact component={BrowseCompanies} />
             <Route path="/portfolio" exact component={BrowsePortfolio} />
             <Route path="/login" exact component={Login} />
-            <Route path="/company" exact component={SingleCompany} />
+            <Route path="/company/:id" exact component={SingleCompany} />
             <Route path="/visualizer" exact component={StockVisualizer} />
             {/*<Route path="/users/user/:id" exact component={SingleUser} />
             <Route path="/stocks/:id" exact component={SingleStock} />*/}
