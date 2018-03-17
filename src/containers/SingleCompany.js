@@ -71,16 +71,12 @@ class SingleCompany extends Component {
                 </div>
                 <div className="box is-radiusless singleUserBox">
                     {this.state.defaultTab? 
-                        ()=>{
                         <div user={this.state.symbol}>{this.state.symbol}</div>
-                        }:
-                        ()=>{<div id={this.state.symbol} >{this.state.symbol}</div>}
+                        :<div id={this.state.symbol} >{this.state.symbol}</div>
                     }
                 </div>
-                
             </article>
-        );
-        }
+        );}
     }
 }
 export default SingleCompany;
