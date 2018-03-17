@@ -12,7 +12,7 @@ class SingleCompany extends Component {
     constructor(props){
         super(props);
         this.state = {
-            symbol: props.match.company,
+            symbol: props.match.params.id,
             defaultTab: true
         }
     }
