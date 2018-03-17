@@ -6,10 +6,12 @@
 
 
 //TODO: CSS for the image and the name
-//TODO: tabs
 import React, { Component } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import CompanySummarySub from './CompanySummarySub.js';
+import CompanyListSub from './CompanyListSub.js';
+
 import jsondata from '../jsonFiles/companies.json';
 
 
@@ -19,6 +21,7 @@ class SingleCompany extends Component {
         this.state = {
             symbol: props.match.params.id,
             defaultTab: true,
+            company:''
         }
     }
     
@@ -46,6 +49,7 @@ class SingleCompany extends Component {
             document.querySelector("#details").classList.add("is-active");            
         }
     }
+    
     render(){
         if (! this.state.company || this.state.company.length === 0){
             return null;
@@ -71,8 +75,15 @@ class SingleCompany extends Component {
                 </div>
                 <div className="box is-radiusless singleUserBox">
                     {this.state.defaultTab? 
-                        <div user={this.state.symbol}>{this.state.symbol}</div>
-                        :<div id={this.state.symbol} >{this.state.symbol}</div>
+                        <CompanySummarySub symbol={this.state.symbol} 
+                            name= {this.state.company.name}
+                            sector= {this.state.company.sector}
+                            subindustry= {this.state.company.subindustry}
+                            address= {this.state.company.address}
+                            date_added= {this.state.company.date_added}
+                            CIK= {this.state.company.CIK}
+                            frequency= {this.state.company.frequency}/>
+                        :<CompanyListSub company={this.state.company} />
                     }
                 </div>
             </article>
