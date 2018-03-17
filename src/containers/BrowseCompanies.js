@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import jsondata from '../../public/jsonFiles/companies.json';
 
 class BrowseCompanies extends Component {
     constructor(props){
@@ -13,12 +14,18 @@ class BrowseCompanies extends Component {
     }
     
     componentDidMount(){
-        axios.fetch('../public/companies.json').then(response => {
+        fetch(jsondata)
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({companies:data});
+            console.log('data:', data);
+          })
+        /*axios.get('address').then(response => {
             this.setState({companies:response.data.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
         })
         .catch(function (error){
             alert('Error with api call ... error=' + error);
-        });
+        });*/
     }
     
     
