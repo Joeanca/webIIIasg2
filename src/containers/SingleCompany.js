@@ -10,15 +10,30 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import jsondata from '../jsonFiles/companies.json';
+
 
 class SingleCompany extends Component {
     constructor(props){
         super(props);
         this.state = {
             symbol: props.match.params.id,
-            defaultTab: true
+            defaultTab: true,
         }
     }
+    
+    componentDidMount(){
+        //remove the line below once the api has been implemented!
+        this.setState({company:jsondata.find(data=>data.symbol === this.state.symbol)});
+        
+        /*axios.get().then(response => {
+            this.setState({companies:response.data.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
+        })
+        .catch(function (error){
+            alert('Error with api call ... error=' + error);
+        });*/
+    }
+    
     changeTab = ()=>{
         if (this.state.defaultTab) {
             this.setState({defaultTab:false});
@@ -30,9 +45,11 @@ class SingleCompany extends Component {
             document.querySelector("#portfolio").classList.remove("is-active");
             document.querySelector("#details").classList.add("is-active");            
         }
-        console.log(this.state.defaultTab);
     }
     render(){
+        if (! this.state.company || this.state.company.length === 0){
+            return null;
+        }else{
         return(
             <article className="section">
                 <div className="card-image box is-marginless column">
@@ -41,6 +58,8 @@ class SingleCompany extends Component {
                             {/* https://stackoverflow.com/questions/44154939/load-local-images-in-react-js */}
                           <img src={process.env.PUBLIC_URL + '/logos/'+ this.state.symbol+ '.svg'} alt={this.state.symbol} />
                         </figure>
+                        <div>{this.state.company.name}</div>
+                        
                     </div>
                 </div>
                 {/* Render tabs and pass in props*/}
@@ -61,6 +80,7 @@ class SingleCompany extends Component {
                 
             </article>
         );
+        }
     }
 }
 export default SingleCompany;
