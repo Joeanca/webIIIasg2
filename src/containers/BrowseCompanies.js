@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import jsondata from './jsonFiles/companies.json';
 
 class BrowseCompanies extends Component {
     constructor(props){
@@ -13,7 +14,6 @@ class BrowseCompanies extends Component {
     }
 
     componentDidMount(){
-        var jsondata = require('companies.json');
         console.log(jsondata);
         /*axios.get(process.env.PUBLIC_URL + ).then(response => {
             this.setState({companies:response.data.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
