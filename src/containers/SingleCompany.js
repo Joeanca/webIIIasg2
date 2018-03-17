@@ -53,9 +53,9 @@ class SingleCompany extends Component {
                 <div className="box is-radiusless singleUserBox">
                     {this.state.defaultTab? 
                         ()=>{
-                        <div><div user={this.state.symbol} />{this.state.symbol}</div>
+                        <div user={this.state.symbol}>{this.state.symbol}</div>
                         }:
-                        ()=>{<div><div id={this.state.symbol} />{this.state.symbol}</div>}
+                        ()=>{<div id={this.state.symbol} >{this.state.symbol}</div>}
                     }
                 </div>
                 
