@@ -53,14 +53,19 @@ class HeaderBar extends React.Component {
             {/* Contracted burger menu at start */}
             <div className="navbar-menu  navbar-dropdown">
                 <div className="navbar-end">
-                     <NavLink className="navbar-item" to={ {pathname: "/users" }} onClick={this.toggleMenu} >
-                        <div className="">Users</div>
-                        <div>Browse the users in our system</div>
+                     <NavLink className="navbar-item" to={ {pathname: "/companies" }} onClick={this.toggleMenu} >
+                        <div className="">Companies</div>
+                        <div>Browse the companies in our system</div>
                      </NavLink>
                     <hr />
-                     <NavLink className="navbar-item" to={ {pathname: "/stocks" }} onClick={this.toggleMenu}>
-                        <div>Stocks</div>
-                        <div>Browse the stocks in our system</div>
+                     <NavLink className="navbar-item" to={ {pathname: "/portfolio" }} onClick={this.toggleMenu}>
+                        <div>Portfolio</div>
+                        <div>Browse your portfolio</div>
+                     </NavLink>
+                     <hr />
+                     <NavLink className="navbar-item" to={ {pathname: "/visualizer" }} onClick={this.toggleMenu}>
+                        <div>Stock Visualizer</div>
+                        <div>Interactive stock information</div>
                      </NavLink>
                      <hr />
                      <NavLink className="navbar-item" to={ {pathname: "/aboutus" }} onClick={this.toggleMenu}>
@@ -82,14 +87,18 @@ class HeaderBar extends React.Component {
               </div>
               <div className="dropdown-menu" id="dropdown-menu" role="menu">
                 <div className="dropdown-content">
-                  <NavLink to={ {pathname: "/users" }} className="dropdown-item">
-                    <div className="">Users</div>
-                    <div>Browse the users in our system</div>
+                  <NavLink to={ {pathname: "/companies" }} className="dropdown-item">
+                    <div className="">Companies</div>
+                    <div>Browse the companies in our system</div>
                   </NavLink>
                   <hr className="dropdown-divider"/>
-                  <NavLink to={ {pathname: "/stocks" }} className="dropdown-item">
-                    <div>Stocks</div>
-                    <div>Browse the stocks in our system</div>
+                  <NavLink to={ {pathname: "/portfolio" }} className="dropdown-item">
+                    <div>Portfolio</div>
+                    <div>Browse your portfolio</div>
+                  </NavLink>
+                  <NavLink to={ {pathname: "/visualizer" }} className="dropdown-item">
+                    <div>Stock Visualizer</div>
+                    <div>Interactive stock information</div>
                   </NavLink>
                   <hr className="dropdown-divider"/>
                   <NavLink to={ {pathname: "/aboutus" }} className="dropdown-item is-info is-hovered">
