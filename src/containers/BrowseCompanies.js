@@ -44,9 +44,9 @@ class BrowseCompanies extends Component {
                                 return(
                                     <tr key={ind}>
                                     <td>
-                                        <NavLink to={"/company/" + company.symbol} company={company} key={ind}>{company.symbol}</NavLink>
+                                        <NavLink to={"/company/" + company.symbol} company={company} key={ind}>The logo needs to be here</NavLink>
                                     </td>
-                                    <td><NavLink to={"/company/" + company.symbol} key={ind}>{company.stockName}</NavLink></td>
+                                    <td><NavLink to={"/company/" + company.symbol} key={ind}>{company.name}</NavLink></td>
                                     </tr>
                                 );
                             }):null
