@@ -20,8 +20,17 @@ class SingleCompany extends Component {
         }
     }
     changeTab = ()=>{
-        if (this.state.defaultTab) this.setState({defaultTab:false});
-        else this.setState({defaultTab:true});
+        if (this.state.defaultTab) {
+            this.setState({defaultTab:false});
+            document.querySelector("#details").classList.remove("is-active");
+            document.querySelector("#portfolio").classList.add("is-active");
+        }
+        else {
+            this.setState({defaultTab:true});
+            document.querySelector("#portfolio").classList.remove("is-active");
+            document.querySelector("#details").classList.add("is-active");            
+        }
+        console.log(this.state.defaultTab);
     }
     render(){
         return(
@@ -44,9 +53,9 @@ class SingleCompany extends Component {
                 <div className="box is-radiusless singleUserBox">
                     {this.state.defaultTab? 
                         ()=>{
-                        <div id="detailsSection" className=""><div user={this.state.user} />{this.state.symbol}</div>
+                        <div><div user={this.state.symbol} />{this.state.symbol}</div>
                         }:
-                        ()=>{<div className="is-hidden" id="portfolioSection"><div id={this.state.user.id} />{this.state.symbol}</div>}
+                        ()=>{<div><div id={this.state.symbol} />{this.state.symbol}</div>}
                     }
                 </div>
                 
