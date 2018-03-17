@@ -1,7 +1,8 @@
 /*Browse Companies. For this view, display a list of companies (and their logos) sorted by name. Each company name will be a link/route to a Single Company view. */
 
 // TODO: Implement api call to new website, SEE IF WE CAN DO IT WITH A DESIGN LAYER!
-// TODO: CSS and comments
+// TODO: CSS (remove table and implement another type of layout, looks like crad on iPad viewport) and comments
+
 
 
 import React, { Component } from 'react';
@@ -18,7 +19,10 @@ class BrowseCompanies extends Component {
     }
 
     componentDidMount(){
+        //remove the line below once the api has been implemented!
         this.setState({companies:jsondata.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
+        
+        
         /*axios.get().then(response => {
             this.setState({companies:response.data.sort((a,b)=>{ let result  =0; if(a.name>b.name){result=1;}else if(b.name>a.name){result=-1;} return result;})});
         })
@@ -42,7 +46,8 @@ class BrowseCompanies extends Component {
                 </nav>
                 <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-narrow-mobile">
                     <tbody>
-                {this.state.companies?
+                        {/* if statement for the displaying of the table of companies. */}
+                        {this.state.companies?
                             this.state.companies.map((company, ind) => {
                                 return(
                                     <tr key={ind}>
