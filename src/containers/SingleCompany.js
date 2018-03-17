@@ -12,13 +12,15 @@ class SingleCompany extends Component {
     constructor(props){
         super(props);
         this.state = {
-            symbol: props.company
+            symbol: props.match.company,
+            defaultTab: true
         }
     }
     render(){
         return(
             <article className="section">
                 {this.state.symbol}
+                {console.log(this.props)}
             </article>
         );
     }
