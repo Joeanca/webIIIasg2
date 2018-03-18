@@ -72,6 +72,19 @@ const AboutUs = ()=>{
                         </span>
                         Font awesome for icons+ 
                     </a>
+                    <a href="https://www.npmjs.com/package/react-easy-chart" className="panel-block">
+                        <span className="panel-icon">
+                          <i className="fab fa-font-awesome"></i>
+                        </span>
+                        React easy chart 
+                    </a>
+                    <a href="https://www.npmjs.com/package/react-google-charts" className="panel-block">
+                          <span className="panel-icon">
+                          <i className="fab fa-font-awesome"></i>
+                        </span>
+                        react-google-charts 
+                    </a>
+                    
                     <a href="https://taroworks.org/wp-content/uploads/2016/08/FNC.png" className="panel-block">
                         <span className="panel-icon">
                           <i className="fas fa-coffee"></i>

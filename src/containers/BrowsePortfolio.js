@@ -5,20 +5,47 @@
     b.For the Summary sub-view (which should be the default), display the following information: total number of companies in portfolio, the total number of stocks in portfolio, and the current $ worth of the portfolio. Also display a pie chart displaying a percentage summary of the portfolio information for that user (see 2a in Back-End Requirements). */
     
 import React, { Component } from 'react';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import PortfolioSummarySub from './PortfolioSummarySub.js';
+import PortfolioInfoSub from './PortfolioInfoSub.js';
 
 class BrowsePortfolio extends Component {
     constructor(props){
         super(props);
         this.state = {
-            something: []
+            defaultTab: true,
+            userid: 118
         }
     }
+    
+    changeTab = ()=>{
+        if (this.state.defaultTab) {
+            this.setState({defaultTab:false});
+            document.querySelector("#summary").classList.remove("is-active");
+            document.querySelector("#info").classList.add("is-active");
+        }
+        else {
+            this.setState({defaultTab:true});
+            document.querySelector("#info").classList.remove("is-active");
+            document.querySelector("#summary").classList.add("is-active");            
+        }
+    }
+    
     render(){
         return(
             <article className="section">
-                Browse Portfolio...
+                {/* Render tabs and pass in props*/}
+                <div className="tabs is-boxed is-fullwidth is-marginless">
+                    <ul>
+                        <li className="is-active" id="summary"><a onClick={this.changeTab} >Your portfolio summary</a></li>
+                        <li id="info"><a onClick={this.changeTab}>Your portfolio information</a></li>
+                    </ul>
+                </div>
+                <div className="box is-radiusless singleUserBox">
+                    {this.state.defaultTab? 
+                        <PortfolioSummarySub userid={this.state.userid}/>
+                        :<PortfolioInfoSub userid={this.state.userid}/>
+                    }
+                </div>
             </article>
         );
     }
