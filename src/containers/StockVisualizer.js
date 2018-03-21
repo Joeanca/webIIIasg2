@@ -90,7 +90,7 @@ class StockVisualizer extends Component {
         let getWithinMonth = data => {if(data.date >= "2017-"+currentmonth.element.month.num+"-01" && data.date <= "2017-"+currentmonth.element.month.num+"-31"){return data;}}
         let filteredStocks =  [ ...new Set(this.state.userPortfolio.filter(getWithinMonth))];
         this.setState({filteredStocks: filteredStocks});
-        var uniqueStocks = [ ...new Set(filteredStocks.map(name => {return name.name;}))];
+        var uniqueStocks = [ ...new Set(this.state.userPortfolio.map(name => {return name.name;}))];
         this.setState({uniqueStocks: uniqueStocks}, ()=>this.populateGraphDate());
     }
     
