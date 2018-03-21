@@ -19,7 +19,12 @@ class StockVisualizer extends Component {
             options: {
                 title: 'Stock close per day of month',
                 interpolateNulls: true,
+                animation:{
+                    duration: 1000,
+                    easing: 'linear',
+                },
             },
+            
         };
     }
     
@@ -50,7 +55,7 @@ class StockVisualizer extends Component {
             let data1, data2, data3;
             // data.push(['date',this.state.drop2, this.state.drop3, this.state.drop4])
             data.push([{"label":"date","type":"string"},{"label":this.state.drop2,"type":"number"},{"label":this.state.drop3,"type":"number"},{"label":this.state.drop4,"type":"number"}]);
-            let getClose = (object)=>{if(data1)return data1.close; else return null};
+            let getClose = (object)=>{if(object)return object.close; else return null};
             for (let date of dates ){
                 data1 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop2 && data.date.trim() === date){return data}else return null});
                 data2 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop3 && data.date.trim() === date){return data}else return null});                
@@ -76,24 +81,19 @@ class StockVisualizer extends Component {
         });
         this.populateGraphDate();        if (!expanded)drop.classList.add('is-active');
     }
-
+    
     filterList = (currentmonth)=>{
         this.setState({month:currentmonth.element.month.mon });
         this.setState({monthNum: currentmonth.element.month.num});
         let options = this.state.options;
         this.setState({options: options});
-        let filteredStocks = Array.filter(this.state.userPortfolio, function(data){
-            if(data.date >= "2017-"+currentmonth.element.month.num+"-01" && data.date <= "2017-"+currentmonth.element.month.num+"-31")
-                {
-                    return data;
-                }
-        });
+        let getWithinMonth = data => {if(data.date >= "2017-"+currentmonth.element.month.num+"-01" && data.date <= "2017-"+currentmonth.element.month.num+"-31"){return data;}}
+        let filteredStocks =  [ ...new Set(this.state.userPortfolio.filter(getWithinMonth))];
         this.setState({filteredStocks: filteredStocks});
-        var uniqueStocks = [ ...new Set(filteredStocks.map(name => {
-                return name.name;
-            }))];
+        var uniqueStocks = [ ...new Set(filteredStocks.map(name => {return name.name;}))];
         this.setState({uniqueStocks: uniqueStocks}, ()=>this.populateGraphDate());
     }
+    
     render(){
         return(
             <div className="section" id="dropdown_container">
