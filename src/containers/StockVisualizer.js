@@ -196,7 +196,6 @@ class StockVisualizer extends Component {
                     {this.state.data?
                     <Chart
                           chartType="LineChart"
-                        //   columns={this.state.columns}
                           data={this.state.data}
                           options={this.state.options}
                           graph_id="PieChart"
