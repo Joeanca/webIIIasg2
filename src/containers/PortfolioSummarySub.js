@@ -5,8 +5,8 @@
 //TODO CSS
 
 import React, { Component } from 'react';
-import axios from 'axios';
-import {PieChart, Legend} from 'react-easy-chart';
+// import axios from 'axios';
+// import {PieChart, Legend} from 'react-easy-chart';
 import { Chart } from 'react-google-charts';
 
 
@@ -18,8 +18,18 @@ class PortfolioSummarySub extends Component {
         super(props);
         this.state={
             company: "hello",
-            userid: this.props.userid
-        }
+            userid: this.props.userid,
+            options: {
+                title: 'Portfolio summary',
+                animation:{
+                    duration: 1000,
+                    easing: 'inAndOut',
+                    startup: true,
+                    
+                },
+                is3D: true,
+            }
+        };
     }
     
     componentDidMount(){
@@ -54,7 +64,7 @@ class PortfolioSummarySub extends Component {
                         <Chart
                           chartType="PieChart"
                           data={this.state.pieData}
-                          options={{}}
+                          options={this.state.options}
                           graph_id="PieChart"
                           width="100%"
                           height="400px"
