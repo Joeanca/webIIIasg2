@@ -9,6 +9,8 @@ import { Chart } from 'react-google-charts';
 //http://recharts.org/#/en-US/examples/LineChartConnectNulls?????
 import jsondata from '../jsonFiles/prices.json';
 
+// TODO: NAME OF STOCK IN THE DROPDOWNS
+// TODO: CSS
 
 class StockVisualizer extends Component {
     constructor(props){
@@ -35,9 +37,9 @@ class StockVisualizer extends Component {
         this.setState({userPortfolio:userPortfolio});
     }
     populateGraphDate= ()=>{
-        this.setState({data:null});
-        console.log(this.state.drop2 + this.state.drop3 + this.state.drop4);
+        // console.log(this.state.drop2 + this.state.drop3 + this.state.drop4);
         if (this.state.drop2 && this.state.drop3 && this.state.drop4){
+            this.setState({data:null});
             let getDaysInMonth = (month,year) =>new Date(year, month, 0).getDate();
             let daysInMonth = getDaysInMonth(this.state.monthNum, 2017);
             let dates = [];
@@ -45,13 +47,8 @@ class StockVisualizer extends Component {
             for (let i = 1; i<=daysInMonth; i++){
                 let currentDay = "2017-"+ this.state.monthNum+"-"+('0' + i).slice(-2);
                 dates.push(currentDay);
-                
             }
             let filteredStocks = this.state.filteredStocks;
-            // for (let date of dates ){
-            //     filteredStocks.find((data)=>{if(data.name === "AAPL" && data.date.trim() == date){console.log(data)}});
-            // }
-            
             //each data check if the stock exists and if it doesnt add a null
             let data1, data2, data3;
             // data.push(['date',this.state.drop2, this.state.drop3, this.state.drop4])
@@ -66,6 +63,9 @@ class StockVisualizer extends Component {
             this.setState({data:data});
         }
     }
+    graphTrigger= (changeMyState)=>{
+        this.setState(changeMyState, ()=>this.populateGraphDate());
+    }
     
     toggleDropdown = (dropMe)=>{
         let drop = document.querySelector("#"+dropMe);
@@ -73,17 +73,12 @@ class StockVisualizer extends Component {
         if (drop.classList.contains('is-active')){
             expanded= true;
         } 
-        this.pullUpDropdown();
-        if (!expanded)drop.classList.add('is-active');
-    }
-    
-    pullUpDropdown = ()=>{
         [].map.call(document.querySelectorAll('.is-active'), function(el) {
             el.classList.remove('is-active');
         });
-        this.populateGraphDate();
+        this.populateGraphDate();        if (!expanded)drop.classList.add('is-active');
     }
-    
+
     filterList = (currentmonth)=>{
         this.setState({month:currentmonth.element.month.mon });
         this.setState({monthNum: currentmonth.element.month.num});
@@ -91,11 +86,10 @@ class StockVisualizer extends Component {
         this.setState({options: options});
         let filteredStocks = this.state.userPortfolio.filter((data)=>{if(data.date >= "2017-"+currentmonth.element.month.num+"-01" && data.date <= "2017-"+currentmonth.element.month.num+"-31")return data;});
         this.setState({filteredStocks: filteredStocks});
-        console.log(filteredStocks);
         var uniqueStocks = [ ...new Set(filteredStocks.map(name => {
                 return name.name;
             }))];
-        this.setState({uniqueStocks: uniqueStocks,drop2:'',drop3:'',drop4:''});
+        this.setState({uniqueStocks: uniqueStocks}, ()=>this.populateGraphDate());
     }
     render(){
         return(
@@ -138,7 +132,7 @@ class StockVisualizer extends Component {
                             this.state.uniqueStocks.map((stock, ind) => {
                                 let thisDropVars = {drop:"drop2",stock: stock};
                                 return(
-                                   <div className="dropdown-item" key={ind} onClick={()=>{this.populateGraphDate();this.setState({drop2:stock})}}>{"["+stock+"]" + "stockNameHolder"}
+                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop2:stock})}>{"["+stock+"]" + "stockNameHolder"}
                                     </div>
                                 );
                             }):null
@@ -161,7 +155,7 @@ class StockVisualizer extends Component {
                             this.state.uniqueStocks.map((stock, ind) => {
                                 let thisDropVars = {drop:"drop3",stock: stock};
                                 return(
-                                   <div className="dropdown-item" key={ind} onClick={()=>{this.setState({drop3:stock})}}>{"["+stock+"]" + "stockNameHolder"}
+                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop3:stock})}>{"["+stock+"]" + "stockNameHolder"}
                                     </div>
                                 );
                             }):null
@@ -184,7 +178,7 @@ class StockVisualizer extends Component {
                             this.state.uniqueStocks.map((stock, ind) => {
                                 let thisDropVars = {drop:"drop4",stock: stock};
                                 return(
-                                   <div className="dropdown-item" key={ind} onClick={()=>{this.setState({drop4:stock})}}>{"["+stock+"]" + "stockNameHolder"}
+                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop4:stock})}>{"["+stock+"]" + "stockNameHolder"}
                                     </div>
                                 );
                             }):null
@@ -194,17 +188,24 @@ class StockVisualizer extends Component {
                 </div>
                 <div>
                     {this.state.data?
-                    <Chart
-                          chartType="LineChart"
-                          data={this.state.data}
-                          options={this.state.options}
-                          graph_id="PieChart"
-                          width="100%"
-                          height="400px"
-                          legend_toggle
-                        />: null
+                    <div>
+                        <Chart
+                              chartType="LineChart"
+                            //   columns={this.state.columns}
+                              data={this.state.data}
+                              options={this.state.options}
+                              graph_id="PieChart"
+                              width="100%"
+                              height="400px"
+                              legend_toggle
+                            />
+                    </div>
+                    : null
+                        
+                        
                     }
                 </div>
+                
             </div>
         );
     }
