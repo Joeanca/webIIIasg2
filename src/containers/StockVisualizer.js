@@ -1,16 +1,13 @@
 /* 9.Stock Visualizer. For this view, display a line chart of the close values for a single month for up to three stocks. That is, the x-axis will contain the days, while the y-axis will be money. There should be four drop-down lists: one to select month, the others to select stocks. The drop-down should display symbol and name. Be sure to use different colors for each line. */
 
 import React, { Component } from 'react';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
-import {LineChart, Legend} from 'react-easy-chart';
+// import axios from 'axios';
+// import { NavLink } from 'react-router-dom';
 import { Chart } from 'react-google-charts';
 
 //http://recharts.org/#/en-US/examples/LineChartConnectNulls?????
 import jsondata from '../jsonFiles/prices.json';
 
-// TODO: NAME OF STOCK IN THE DROPDOWNS
-// TODO: CSS
 
 class StockVisualizer extends Component {
     constructor(props){
@@ -53,11 +50,12 @@ class StockVisualizer extends Component {
             let data1, data2, data3;
             // data.push(['date',this.state.drop2, this.state.drop3, this.state.drop4])
             data.push([{"label":"date","type":"string"},{"label":this.state.drop2,"type":"number"},{"label":this.state.drop3,"type":"number"},{"label":this.state.drop4,"type":"number"}]);
+            let getClose = (object)=>{if(data1)return data1.close; else return null};
             for (let date of dates ){
-                data1 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop2 && data.date.trim() == date){return data}else return null});
-                data2 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop3 && data.date.trim() == date){return data}else return null});                
-                data3 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop4 && data.date.trim() == date){return data}else return null});
-                data.push([date,(()=>{if(data1)return data1.close; else return null})(),(()=>{if(data2)return data2.close; else return null})(),(()=>{if(data3)return data3.close; else return null})()]);
+                data1 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop2 && data.date.trim() === date){return data}else return null});
+                data2 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop3 && data.date.trim() === date){return data}else return null});                
+                data3 = filteredStocks.find((data)=>{if(data.name ===  this.state.drop4 && data.date.trim() === date){return data}else return null});
+                data.push([date,getClose(data1),getClose(data2),getClose(data3)]);
             }
             console.log(data);
             this.setState({data:data});
@@ -84,7 +82,12 @@ class StockVisualizer extends Component {
         this.setState({monthNum: currentmonth.element.month.num});
         let options = this.state.options;
         this.setState({options: options});
-        let filteredStocks = this.state.userPortfolio.filter((data)=>{if(data.date >= "2017-"+currentmonth.element.month.num+"-01" && data.date <= "2017-"+currentmonth.element.month.num+"-31")return data;});
+        let filteredStocks = Array.filter(this.state.userPortfolio, function(data){
+            if(data.date >= "2017-"+currentmonth.element.month.num+"-01" && data.date <= "2017-"+currentmonth.element.month.num+"-31")
+                {
+                    return data;
+                }
+        });
         this.setState({filteredStocks: filteredStocks});
         var uniqueStocks = [ ...new Set(filteredStocks.map(name => {
                 return name.name;
@@ -130,9 +133,8 @@ class StockVisualizer extends Component {
                         <div className="dropdown-content">
                         {this.state.uniqueStocks?
                             this.state.uniqueStocks.map((stock, ind) => {
-                                let thisDropVars = {drop:"drop2",stock: stock};
                                 return(
-                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop2:stock})}>{"["+stock+"]" + "stockNameHolder"}
+                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop2:stock})}>{"["+stock+"]" + stock.volume}
                                     </div>
                                 );
                             }):null
@@ -153,9 +155,8 @@ class StockVisualizer extends Component {
                         <div className="dropdown-content">
                         {this.state.uniqueStocks?
                             this.state.uniqueStocks.map((stock, ind) => {
-                                let thisDropVars = {drop:"drop3",stock: stock};
                                 return(
-                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop3:stock})}>{"["+stock+"]" + "stockNameHolder"}
+                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop3:stock})}>{"["+stock+"]" + stock.volume}
                                     </div>
                                 );
                             }):null
@@ -176,9 +177,8 @@ class StockVisualizer extends Component {
                         <div className="dropdown-content">
                         {this.state.uniqueStocks?
                             this.state.uniqueStocks.map((stock, ind) => {
-                                let thisDropVars = {drop:"drop4",stock: stock};
                                 return(
-                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop4:stock})}>{"["+stock+"]" + "stockNameHolder"}
+                                   <div className="dropdown-item" key={ind} onClick={()=>this.graphTrigger({drop4:stock})}>{"["+stock+"]" + stock.volume}
                                     </div>
                                 );
                             }):null
